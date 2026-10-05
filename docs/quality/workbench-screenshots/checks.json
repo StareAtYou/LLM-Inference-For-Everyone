@@ -1,0 +1,182 @@
+[
+  {
+    "width": 360,
+    "state": "single",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 360,
+    "state": "batch",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 360,
+    "state": "operator",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 360,
+    "state": "released",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 360,
+    "state": "attention",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 360,
+    "state": "topic",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": "single",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": "batch",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": "operator",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": "released",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": "attention",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": "topic",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 768,
+    "state": "single",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 768,
+    "state": "batch",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 768,
+    "state": "operator",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 768,
+    "state": "released",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 768,
+    "state": "attention",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 768,
+    "state": "topic",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "state": "single",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "state": "batch",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "state": "operator",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "state": "released",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "state": "attention",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "state": "topic",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1920,
+    "state": "single",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1920,
+    "state": "batch",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1920,
+    "state": "operator",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1920,
+    "state": "released",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1920,
+    "state": "attention",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1920,
+    "state": "topic",
+    "overflow": false,
+    "errors": []
+  }
+]

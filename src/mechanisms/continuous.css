@@ -1,0 +1,416 @@
+.mp-mode-switch {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0 0 17px;
+}
+.mp-mode-switch button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #444a53;
+  border-radius: 7px;
+  background: #20262d;
+  color: #afb9c6;
+  font-size: 12px;
+}
+.mp-mode-switch button[aria-pressed="true"] {
+  color: var(--mp-green);
+  background: #293931;
+  border-color: #72977b;
+}
+.mp-mode-switch > span {
+  color: #929eac;
+  font-size: 11px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.mp-snapshot-label {
+  margin: 0;
+  padding: 14px 18px 0;
+  border-top: 1px solid #36413b;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--mp-amber);
+}
+.cm-scene {
+  padding: 18px;
+  min-width: 0;
+  background: radial-gradient(ellipse at 85% 40%, #26344c45, transparent 65%);
+}
+.cm-heading {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  color: var(--mp-green);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.cm-heading output {
+  font: 13px/1.7 monospace;
+}
+.cm-motion-note {
+  margin: 4px 0 13px;
+  color: #a7b3bf;
+  font-size: 10px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.cm-glyph {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 220px;
+}
+.cm-glyph-label {
+  display: block;
+  font-size: 9px;
+  line-height: 1.4;
+  color: #a8b9c5;
+  min-height: 24px;
+  overflow-wrap: anywhere;
+}
+.cm-glyph svg {
+  display: block;
+  width: 100%;
+  max-height: 52px;
+  overflow: visible;
+}
+.cm-data {
+  fill: #8ecc9c;
+  stroke: #a7d7b1;
+  stroke-width: 0.5;
+}
+.cm-selected {
+  fill: #b8edbd;
+  stroke: #e0f9d6;
+  stroke-width: 1;
+}
+.cm-negative,
+.cm-original {
+  fill: #b5a4ef;
+}
+.cm-masked {
+  fill: #3c4650;
+  stroke: #727d87;
+}
+.cm-mask-line {
+  stroke: #9da7b3;
+}
+.cm-token {
+  fill: #393950;
+  stroke: #9289b2;
+  stroke-width: 0.6;
+}
+.cm-queue {
+  fill: #544836;
+  stroke: #c6ad7e;
+  stroke-width: 0.6;
+}
+.cm-glyph-cache .cm-token {
+  fill: #2d483e;
+  stroke: #86b697;
+}
+.cm-sleeping {
+  fill: #252c38;
+  stroke: #627181;
+  stroke-width: 0.6;
+}
+.cm-route {
+  stroke: #526172;
+  stroke-width: 0.7;
+  fill: none;
+}
+.cm-route-selected {
+  stroke: #b8edbd;
+  stroke-width: 1.5;
+  fill: none;
+}
+.cm-token-text {
+  fill: #ecedf2;
+  font-size: 7px;
+}
+.cm-value-text {
+  fill: #14271c;
+  font: 8px monospace;
+}
+.cm-index-text {
+  fill: #bcc5cf;
+  font: 6px monospace;
+}
+.cm-ring {
+  stroke: #728398;
+  stroke-width: 0.8;
+  stroke-dasharray: 2 3;
+  fill: none;
+}
+.cm-axis {
+  stroke: #657788;
+  stroke-width: 0.6;
+  fill: none;
+}
+.cm-reference {
+  stroke: #bbb1d3;
+  stroke-dasharray: 2 2;
+  fill: none;
+}
+.cm-rotation-vector {
+  stroke: #b8edbd;
+  stroke-width: 2;
+}
+.cm-dot {
+  fill: #b8edbd;
+}
+.cm-error {
+  stroke: #f2d293;
+  stroke-width: 1.5;
+}
+.cm-exact-output {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 15px 0 0;
+  color: #aebac5;
+  font-size: 10px;
+}
+.cm-exact-output > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-width: 0;
+}
+.cm-exact-output output {
+  color: #d3ecd8;
+  font: 11px/1.7 monospace;
+  padding: 3px 7px;
+  border: 1px solid #42614a;
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .cm-scene {
+    padding: 13px 10px;
+  }
+  .cm-stage-glyphs {
+    gap: 5px;
+  }
+  .cm-glyph-label {
+    font-size: 8px;
+  }
+  .mp-mode-switch > span {
+    flex-basis: 100%;
+  }
+  .mp-snapshot-label {
+    padding: 13px 13px 0;
+  }
+}
+/* Keep the transport beside the overview entrance so playback remains observable. */
+.mp-player[data-mode="continuous"] .mp-controls {
+  margin-top: 0;
+}
+.mp-player[data-mode="continuous"] .mp-seek {
+  margin-bottom: 15px;
+}
+
+/* Exact snapshot diagrams stay still; the whole-path scene owns continuous motion. */
+.mp-player[data-mode="continuous"] .mp-graph-edge circle {
+  animation: none !important;
+  opacity: 0 !important;
+}
+/* One bounded workspace. Geometry is driven solely by the shared timeline. */
+.cm-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+  border: 1px solid #3b4e48;
+  border-radius: 12px;
+  background:
+    radial-gradient(ellipse at 50% 45%, #30463844, transparent 68%), #141d23;
+  overflow: hidden;
+}
+.cm-main-path {
+  fill: none;
+  stroke-width: 2;
+}
+.cm-zone-index {
+  fill: #8dad97;
+  font: 10px monospace;
+  letter-spacing: 2px;
+}
+.cm-zone-title {
+  fill: #d2e3d5;
+  font-size: 12px;
+}
+.cm-workspace {
+  fill: #233a3020;
+  stroke: #53705d;
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+}
+.cm-apparatus-cell {
+  fill: #283d33;
+  stroke: #89ab92;
+}
+.cm-cache-slot {
+  fill: #20312b50;
+  stroke: #617e6b;
+  stroke-dasharray: 3 4;
+}
+.cm-scene-label {
+  fill: #b7c8bf;
+  font-size: 11px;
+}
+.cm-small-label {
+  fill: #9eb4a8;
+  font: 9px monospace;
+}
+.cm-object-label {
+  fill: #193124;
+  font: 11px monospace;
+}
+.cm-operation-label {
+  fill: #ddeee0;
+  font-size: 12px;
+}
+.cm-moving-object {
+  stroke: #d1f1d6;
+  stroke-width: 1;
+  filter: drop-shadow(0 2px 5px #b2ddbd22);
+}
+.cm-matrix-scan {
+  fill: #edd297;
+  opacity: 0.28;
+}
+.cm-angle-arc {
+  stroke: #ebc98b;
+  stroke-width: 4;
+  fill: none;
+}
+.cm-rotation-apparatus .cm-ring {
+  stroke-width: 1.5;
+}
+.cm-rotation-apparatus .cm-axis {
+  stroke-width: 1;
+}
+.cm-rotation-apparatus .cm-reference {
+  stroke-width: 1.5;
+}
+.cm-rotation-apparatus .cm-rotation-vector {
+  stroke-width: 4;
+}
+.cm-sequence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 0;
+  margin-top: 12px;
+}
+.cm-sequence > span {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  color: #8d9e98;
+  font-size: 10px;
+  line-height: 1.8;
+}
+.cm-sequence > span[data-state="active"] {
+  color: #d1e9d5;
+}
+.cm-sequence > span[data-state="complete"] {
+  color: #a4c4ac;
+}
+.cm-sequence small {
+  color: #708b7a;
+  font: 9px monospace;
+}
+.cm-sequence b {
+  font-weight: 400;
+  padding: 0 10px 0 5px;
+  color: #779683;
+}
+.cm-snapshots {
+  margin-top: 15px;
+  border-top: 1px solid #3b4b42;
+  padding-top: 11px;
+}
+.cm-snapshots summary {
+  color: #a9beb0;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 6px 0;
+}
+.cm-snapshot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding-top: 10px;
+}
+.cm-snapshot-grid section {
+  min-width: 0;
+  background: #19242b;
+  padding: 12px;
+  border: 1px solid #36483e;
+  border-radius: 6px;
+}
+.cm-snapshot-grid h4 {
+  margin: 0;
+  color: #c7ddcc;
+  font-size: 11px;
+}
+.cm-snapshot-grid p {
+  font: 10px/1.8 monospace;
+  color: #a3b4aa;
+  overflow-wrap: anywhere;
+}
+.cm-snapshot-grid .cm-stage-glyphs {
+  flex-wrap: wrap;
+}
+.cm-snapshot-grid .cm-glyph {
+  flex-basis: 100px;
+}
+.mp-continuous-details {
+  border-top: 1px solid #37463d;
+}
+.mp-continuous-details > summary {
+  padding: 15px 18px;
+  color: #b6cbbd;
+  font-size: 12px;
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  .cm-snapshot-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cm-zone-title {
+    font-size: 14px;
+  }
+  .cm-sequence > span {
+    font-size: 9px;
+  }
+  .cm-sequence b {
+    padding-right: 5px;
+  }
+}
+.cm-viewport {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #698b75 #16232a;
+  border-radius: 12px;
+}
+.cm-pan-hint {
+  display: none;
+}
+@media (max-width: 600px) {
+  .cm-viewport .cm-canvas {
+    min-width: 740px;
+  }
+  .cm-pan-hint {
+    display: block;
+    margin: 10px 0 0;
+    color: #9eb4a8;
+    font-size: 10px;
+    line-height: 1.7;
+  }
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "modelId": "Qwen/Qwen3.8-27B",
+    "revision": "1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0",
+    "configFile": "Qwen3.8-27B.config.json",
+    "configUrl": "https://huggingface.co/Qwen/Qwen3.8-27B/resolve/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/config.json",
+    "modelCardUrl": "https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md",
+    "sha256": "191e0af232104ed8b65258cf3fb2b842e288008baca7633c11b82a1ac7203aab",
+    "checkedAt": "2026-10-04",
+    "license": "Apache-2.0",
+    "scope": "text backbone; no model weights"
+  },
+  {
+    "modelId": "Qwen/Qwen3.6-35B-A3B",
+    "revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+    "configFile": "Qwen3.6-35B-A3B.config.json",
+    "configUrl": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/resolve/995ad96eacd98c81ed38be0c5b274b04031597b0/config.json",
+    "modelCardUrl": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/blob/995ad96eacd98c81ed38be0c5b274b04031597b0/README.md",
+    "sha256": "93a4693fa9d8392fbfccd4b3c9873f4bfdcb14fdede978b123d07d19675efe99",
+    "checkedAt": "2026-10-04",
+    "license": "Apache-2.0",
+    "scope": "text backbone; no model weights"
+  }
+]

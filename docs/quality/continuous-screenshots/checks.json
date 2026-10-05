@@ -1,0 +1,92 @@
+[
+  {
+    "width": 360,
+    "state": "single",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 360,
+    "state": "batch",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 360,
+    "state": "moe",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": "single",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": "batch",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": "moe",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 768,
+    "state": "single",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 768,
+    "state": "batch",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 768,
+    "state": "moe",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "state": "single",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "state": "batch",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "state": "moe",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1920,
+    "state": "single",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1920,
+    "state": "batch",
+    "overflow": false,
+    "errors": []
+  },
+  {
+    "width": 1920,
+    "state": "moe",
+    "overflow": false,
+    "errors": []
+  }
+]

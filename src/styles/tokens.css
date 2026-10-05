@@ -1,0 +1,25 @@
+:root {
+  --paper: #f8f7f4;
+  --surface: #fff;
+  --ink: #202022;
+  --muted: #6b6b72;
+  --line: #dededc;
+  --purple: #6e48d7;
+  --purple-ink: #623ac7;
+  --purple-soft: #eee8fb;
+  --green: #95d3b6;
+  --dark: #1a1921;
+  --dark-line: #3b384b;
+  --display:
+    "Space Grotesk Variable", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --body: "Inter Variable", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --page: 1280px;
+  --radius: 14px;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+:root {
+  --accent: var(--purple-ink);
+  --accent-soft: var(--purple-soft);
+  --font-mono: var(--mono);
+}
