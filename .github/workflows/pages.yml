@@ -23,8 +23,8 @@ jobs:
       - run: npm ci
       - run: npm run privacy:check
       - run: npm run format:check
-      - run: npm run test:unit
       - run: npx playwright install --with-deps chromium
+      - run: npm run test:unit
       - run: npm run test:pages
       - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
