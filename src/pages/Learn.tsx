@@ -12,6 +12,8 @@ const areaCopy: Record<string, string> = {
   显存与调度: "观察缓存与请求如何共享有限的资源。",
   推理优化: "理解性能收益，也理解条件和代价。",
   工程与框架: "把机制放回真实的系统实现。",
+  "多 GPU 并行": "从切分轴到数据归属，看清每张 GPU 负责什么。",
+  通信原语: "用可核对的输入输出，区分求和、拼接与数据交换。",
 };
 export default function Learn() {
   const [query, setQuery] = useState("");

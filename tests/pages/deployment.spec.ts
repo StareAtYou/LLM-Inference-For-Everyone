@@ -46,3 +46,43 @@ test("Pages inference animation plays after a direct deep-link load", async ({
   await page.reload();
   await expect(page.getByTestId("trace-stage")).toBeVisible();
 });
+
+test("Pages distributed lessons preserve selected operations through refresh and history", async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto(
+    "./#/distributed?view=collectives&collective=all-to-all&depth=expert",
+  );
+  const board = page.getByTestId("collective-explorer");
+  await expect(board).toHaveAttribute("data-operation", "all-to-all");
+  await page.getByLabel("通信 rank 数", { exact: true }).selectOption("4");
+  await page
+    .getByRole("button", { name: "选择 all-gather 通信", exact: true })
+    .click();
+  await expect(board).toHaveAttribute("data-operation", "all-gather");
+  await expect(page.getByLabel("通信 rank 数", { exact: true })).toHaveValue(
+    "4",
+  );
+  await page.goto(
+    "./#/distributed?view=collectives&collective=reduce-scatter&depth=advanced",
+  );
+  await expect(board).toHaveAttribute("data-operation", "reduce-scatter");
+  await page.goBack();
+  await expect(board).toHaveAttribute("data-operation", "all-gather");
+  await page.goForward();
+  await expect(board).toHaveAttribute("data-operation", "reduce-scatter");
+  await page.reload();
+  await expect(board).toHaveAttribute("data-operation", "reduce-scatter");
+  await page.goto("./#/learn/sp?depth=advanced");
+  await expect(page.getByTestId("parallel-explorer")).toHaveAttribute(
+    "data-strategy",
+    "sp",
+  );
+  await page.reload();
+  await expect(page.getByTestId("parallel-topic-demo")).toBeVisible();
+  await page.goto("./#/learn/attention?depth=expert");
+  await expect(page.getByTestId("shape-teaching").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});

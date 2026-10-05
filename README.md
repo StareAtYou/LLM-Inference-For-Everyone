@@ -39,9 +39,10 @@ Pages 构建的默认子路径为 `/LLM-Inference-For-Everyone/`，可通过 `PA
 | 页面 | 内容与操作 |
 | --- | --- |
 | 首页 | 三条学习路径、请求流动图、模型、实验与源码入口 |
-| 学习地图与专题 | 23 个主题及各自独立原理动图，三种解释深度、依赖提示、术语/源码模块检索、收藏和最近浏览 |
-| 推理流程 | 单请求 / 连续批请求的完整计算轨迹；分段关键帧 / 连续时间轴双模式、可调速；旅程 / 逐层 / 逐算子视图，张量、缓存、输出与释放；29 个原理的双模式动图库 |
+| 学习地图与专题 | 38 个主题及各自独立原理动图，三种解释深度、依赖提示、术语/源码模块检索、收藏和最近浏览 |
+| 推理流程 | 单请求 / 连续批请求的完整计算轨迹；分段关键帧 / 连续时间轴双模式、可调速；旅程 / 逐层 / 逐算子视图，张量、缓存、输出与释放；29 个原理的双模式动图库与输入 / 输出 shape 推导 |
 | 模型结构 | Qwen3.8-27B Dense、Qwen3.6-35B-A3B MoE 的完整层矩阵、混合注意力、FFN、专家路由、RoPE / GQA、递归/卷积状态与教学张量形状 |
+| 多 GPU 与通信 | TP / DP / EP / PP / CP / SP 六种切分；九种通信原语，独立的分段 / 连续动画、调速、每卡数据、shape 与数值结果 |
 | 五个实验 | 全注意力 KV 分项；分页/前缀缓存；连续批处理；INT4 / INT8 量化；贪心投机解码 |
 | 框架源码 | vLLM 8 个模块、SGLang 7 个模块；固定版本关系图、职责/输入输出、短代码段、定位链接与原理关联 |
 
@@ -56,7 +57,9 @@ Pages 构建的默认子路径为 `/LLM-Inference-For-Everyone/`，可通过 `PA
 - vLLM v0.30.0：commit `ced6857afa0ea7b2e3f0846a62e1394e90f15607`。
 - SGLang v0.5.21：commit `e00930c5489053f26d86b179cee0d087f846acbb`。
 
-完整推理工作台使用固定教学 Token ID、确定性权重与 H=4 的小网络，逐层计算归一化、投影、注意力 / 线性状态、FFN / MoE、logits 与采样；数值、缓存和输出来自同一条不可变轨迹。MoE 主轨迹为 3 个路由专家选 2，再加门控共享专家。独立原理动图使用各自标注的小数组 / 工程事件示例；首页等概览仍使用说明性固定值。未运行真实 tokenizer 或 Qwen 权重。源码文件元数据、符号、行号与源文件 SHA-256 见 [框架引用](docs/references/frameworks/sources.json)。短代码段遵循 Apache-2.0，许可证随引用保存。图中的调用、消息、数据边是说明性的源码导览，源码概览中的中间层折叠已有标注；推理工作台另提供教学网络的完整逐层、逐算子轨迹。
+完整推理工作台使用固定教学 Token ID、确定性权重与 H=4 的小网络，逐层计算归一化、投影、注意力 / 线性状态、FFN / MoE、logits 与采样；数值、缓存和输出来自同一条不可变轨迹。MoE 主轨迹为 3 个路由专家选 2，再加门控共享专家。独立原理动图使用各自标注的小数组 / 工程事件示例；首页等概览仍使用说明性固定值。未运行真实 tokenizer 或 Qwen 权重。新增 shape 面板按当前请求和算子推导输入、投影、中间对象与输出，区分本轮查询 q、历史 KV 长度 t、变长批次 Token 总数 N，以及配置尺寸和 H=4 教学读数。多 GPU 演示使用可核对的小矩阵和整数缓冲区，区分逻辑切分与实现布局；不运行 NCCL。分布式工作台的分享链接保存主题和解释深度，教学 GPU 数、root、微批等参数保留在当前页面，刷新后恢复默认。
+
+源码文件元数据、符号、行号与源文件 SHA-256 见 [框架引用](docs/references/frameworks/sources.json)。短代码段遵循 Apache-2.0，许可证随引用保存。图中的调用、消息、数据边是说明性的源码导览，源码概览中的中间层折叠已有标注；推理工作台另提供教学网络的完整逐层、逐算子轨迹。
 
 缓存公式只估算 **Full Attention KV**，不包括线性层循环/卷积状态、模型权重、激活、元数据和其他显存开销。量化图为小数组对称权重量化；有效字节不含尺度与打包对齐。批处理时钟与投机解码成本为显式教学假设，不代表真实 GPU 性能。数字都有来源/单位/边界说明，当前没有实测指标。
 
@@ -77,11 +80,11 @@ PREVIEW_URL=http://127.0.0.1:4173 npm run test:e2e
 PREVIEW_URL=http://127.0.0.1:4173 node scripts/capture-quality.mjs
 ```
 
-连续动画衔接修正已通过 101 项单元测试（含发布脱敏检查）、39 项端到端测试、类型检查与生产构建。15 个页面/状态在 360、390、768、1440、1920px 共 75 次布局检查中无页面溢出或运行错误。原版复查见 [质量复查](docs/quality/v1-review.md)；工作台的 30 张截图见 [工作台复查](docs/quality/workbench-review.md)；双模式新增 15 张连续场景截图见 [连续动画复查](docs/quality/continuous-review.md)；持续数据对象、层间回路与 Token 反馈的修正见 [动画衔接复查](docs/quality/motion-review.md)。
+形状推导与分布式教学更新已通过 155 项单元测试（含真实浏览器的独立并行动图检查）、45 项端到端测试、3 项 Pages 部署测试、类型检查与生产构建。新增六张桌面 / 手机截图和复查记录见 [形状与分布式复查](docs/quality/shapes-distributed-review.md)。15 个页面/状态在 360、390、768、1440、1920px 共 75 次布局检查中无页面溢出或运行错误。原版复查见 [质量复查](docs/quality/v1-review.md)；工作台的 30 张截图见 [工作台复查](docs/quality/workbench-review.md)；双模式新增 15 张连续场景截图见 [连续动画复查](docs/quality/continuous-review.md)；持续数据对象、层间回路与 Token 反馈的修正见 [动画衔接复查](docs/quality/motion-review.md)。
 
 ## 目录与后续 B 阶段
 
-[架构说明](docs/architecture.md) 描述内容、模拟、图形和状态的边界。`src/content/` 保存知识/模型/框架；`src/simulation/` 是纯计算；`src/visualizations/` 负责图形；`src/pages/` 与 `src/experiments/` 组织交互；`tests/` 验证行为；`docs/references/` 固定来源。
+[架构说明](docs/architecture.md) 描述内容、模拟、图形和状态的边界。`src/content/` 保存知识/模型/框架；`src/simulation/` 是纯计算；`src/visualizations/` 负责图形；`src/education/` 推导形状；`src/distributed/` 提供并行与通信的纯计算和动图；`src/pages/` 与 `src/experiments/` 组织交互；`tests/` 验证行为；`docs/references/` 固定来源。
 
 后续按依赖逐步扩展：
 
@@ -90,7 +93,7 @@ PREVIEW_URL=http://127.0.0.1:4173 node scripts/capture-quality.mjs
 3. 展示 TTFT、TPOT、吞吐、显存、缓存命中等实测观测值，同时保存环境与假设，区分机制模拟、理论估算和实测。
 4. 在现有独立动图之上深化 FlashAttention、Chunked Prefill、Tensor / Pipeline / Expert Parallel、CUDA Graph 等机制，增加真实执行跟踪与部署场景。
 
-以上是路线，尚未实现 GPU 推理、在线 benchmark、账号或服务端学习同步。现有并行与部署主题为概述；不会把长期“所有阶段/模块”的目标写成第一版已经全部交付。
+以上是路线，尚未实现 GPU 推理、在线 benchmark、账号或服务端学习同步。现有并行与通信工作台是可计算的教学示例，未接入实际分布式服务或通信性能测量；长期“所有阶段/模块”的目标仍将逐步扩展。
 
 ## 发布前脱敏
 

@@ -1,6 +1,8 @@
+import { distributedTopics } from "./distributedTopics";
 import type { Topic } from "../types";
 import { models } from "./models";
 export const topics: Topic[] = [
+  ...distributedTopics,
   {
     id: "tokenization",
     title: "Token：文字如何变成模型输入",
@@ -866,13 +868,14 @@ export const topics: Topic[] = [
       expert: {
         summary: "拆分会增加通信和同步。",
         explanation:
-          "拆分会增加通信和同步。低延迟场景、网络拓扑、批大小、专家负载和 KV布局决定可行策略，不能简单用卡数乘出吞吐。本版只提供原理概览。",
+          "拆分会增加通信和同步。低延迟场景、网络拓扑、批大小、专家负载和 KV布局决定可行策略，不能简单用卡数乘出吞吐。可以在多 GPU 工作台展开六种切分与对应通信。",
         details: [
           "评估扩展时同时记录拓扑、通信字节、同步点和流水线空泡。KV 头数较小时可能复制而非均匀分片；权重分布与缓存分布需要分别确认。",
         ],
       },
     },
     links: [
+      { label: "展开 TP / DP / EP / PP / CP / SP", to: "/distributed" },
       {
         label: "打开对应可视化",
         to: "/frameworks/vllm",

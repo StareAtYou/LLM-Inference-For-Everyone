@@ -5,6 +5,7 @@ import SiteShell from "./components/SiteShell";
 const Lab = lazy(() => import("./pages/Lab"));
 const Frameworks = lazy(() => import("./pages/Frameworks"));
 const Models = lazy(() => import("./pages/Models"));
+const Distributed = lazy(() => import("./pages/Distributed"));
 const Pipeline = lazy(() => import("./pages/Pipeline"));
 const Learn = lazy(() => import("./pages/Learn"));
 const Topic = lazy(() => import("./pages/Topic"));
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/lab" element={<Lab />} />
             <Route path="/frameworks/:framework" element={<Frameworks />} />
             <Route path="/models" element={<Models />} />
+            <Route path="/distributed" element={<Distributed />} />
             <Route path="/pipeline" element={<Pipeline />} />
             <Route path="/learn" element={<Learn />} />
             <Route path="/learn/:topic" element={<Topic />} />

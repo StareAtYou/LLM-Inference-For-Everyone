@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import type { TraceFrame } from "../simulation/inferenceTrace";
 import type { ModelPreset } from "../types";
+import ShapeTeachingPanel from "../education/ShapeTeachingPanel";
+import { deriveTraceShapes } from "../education/shapeDerivations";
 export default function TensorInspector({
   frame,
   requestId,
@@ -37,6 +39,7 @@ export default function TensorInspector({
           的教学网络，使用真实层类型顺序；不代表 Qwen 激活。
         </small>
       </div>
+      <ShapeTeachingPanel lesson={deriveTraceShapes(frame, requestId, model)} />
       <div className="wf-tensor-view" data-testid="trace-tensors">
         <div className="wf-tensor-head">
           <span className="mono">COMPUTED TOY VALUES</span>

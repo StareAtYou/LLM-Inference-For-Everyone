@@ -28,3 +28,11 @@ flowchart LR
 ## 实测扩展
 
 `Observation` 为数值、单位、来源（simulation / estimate / measured）与假设提供统一字段，当前尚未接入 measured 数据。B 阶段需要独立后端、模型和硬件版本记录、请求事件协议、授权与资源限额；新增真实观测适配层，再复用图形组件。浏览器负责交互展示，不承载 27B / 35B 模型权重。教学重放与实时事件必须有显式模式，不能混合成无法解释的性能数字。
+
+## 形状与分布式教学
+
+`src/education/shapeDerivations.ts` 将当前轨迹 / 原理关键帧转换为输入、输出、轴名和数值代入。`ShapeTeachingPanel` 不生成新的推理数值；完整模型逻辑尺寸来自固定模型配置，当前小数组读数来自原轨迹。变长批次按各请求 q 求和，Decode 查询长度与 KV 历史长度分别解释；工程队列、页表等标为结构对象。
+
+`src/distributed/parallel.ts` 和 `collectives.ts` 是可单测的纯计算，两个 Explorer 用现有 `useTimeline` 驱动持续存在的 SVG 数据对象。分数位置控制运动，算术结果在事件边界提交。六种并行策略各有本地参数，九种通信原语明确 group rank 顺序、root 和缓冲区归属。`/distributed` 用 hidden 保持两个工作台实例，切换时保留参数，离屏时钟暂停。主题页复用对应 Explorer，链接只分享主题 / 深度，瞬时计算参数不写入 URL。
+
+DP 不默认引入训练梯度 AllReduce；CP 的局部 softmax 必须全局合并；Megatron SP 使用 TP group 的序列布局，不能作为独立维度任意相乘。示例是浏览器教学计算，不表示 NCCL 的真实拓扑、执行算法或延迟。

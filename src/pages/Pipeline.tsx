@@ -252,7 +252,7 @@ export default function Pipeline() {
             <br />
             跟随数据走完推理。
           </h1>
-          <p>从请求入队到缓存释放。展开计算，看见数字怎样变化。</p>
+          <p>从请求入队到缓存释放。展开计算，看见数字与 shape 怎样变化。</p>
         </div>
         <DepthSwitch />
       </header>
@@ -274,7 +274,9 @@ export default function Pipeline() {
         >
           原理动图<span>{mechanisms.length} 个可展开的机制</span>
         </button>
-        <span className="wf-source-badge">真实结构 · 小维度计算</span>
+        <Link className="wf-source-badge" to={"/distributed?depth=" + depth}>
+          展开多 GPU 与通信 →
+        </Link>
       </nav>
       {view === "journey" ? (
         <>

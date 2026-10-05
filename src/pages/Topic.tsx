@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Link, useParams, useSearchParams } from "react-router";
 import { Bookmark, BookOpen } from "lucide-react";
 import { topics } from "../content/topics";
@@ -11,6 +11,17 @@ import SourceNote from "../components/SourceNote";
 import MechanismPlayer from "../mechanisms/MechanismPlayer";
 import NotFound from "./NotFound";
 import { parseRouteState } from "../lib/urlState";
+import {
+  parallelTopicIds,
+  collectiveTopicIds,
+} from "../content/distributedTopics";
+import type { ParallelStrategy } from "../distributed/parallel";
+import type { CollectiveOperation } from "../distributed/collectives";
+import "../styles/distributed-page.css";
+const ParallelExplorer = lazy(() => import("../distributed/ParallelExplorer"));
+const CollectiveExplorer = lazy(
+  () => import("../distributed/CollectiveExplorer"),
+);
 export default function TopicPage() {
   const { topic: id } = useParams();
   const topic = topics.find((t) => t.id === id);
@@ -51,16 +62,42 @@ export default function TopicPage() {
         </div>
       </header>
       {warning && <p className="notice">{warning}</p>}
+      {(parallelTopicIds.includes(topic.id) ||
+        collectiveTopicIds.includes(topic.id)) && (
+        <section className="topic-distributed-demo">
+          <h2>跟随这个主题的数据对象</h2>
+          <Suspense fallback={<p role="status">正在展开独立演示…</p>}>
+            {parallelTopicIds.includes(topic.id) ? (
+              <div data-testid="parallel-topic-demo">
+                <ParallelExplorer
+                  key={topic.id}
+                  initialStrategy={topic.id as ParallelStrategy}
+                />
+              </div>
+            ) : (
+              <div data-testid="collective-topic-demo">
+                <CollectiveExplorer
+                  key={topic.id}
+                  initialOperation={topic.id as CollectiveOperation}
+                />
+              </div>
+            )}
+          </Suspense>
+        </section>
+      )}
       <div className="topic-layout">
         <article className="reading-body">
           <div className="reading-label">
             <BookOpen size={16} /> {depthLabels[depth]}讲解
           </div>
           <p className="topic-explanation">{content.explanation}</p>
-          <section className="topic-mechanism">
-            <h2>把这个原理展开来看</h2>
-            <MechanismPlayer key={topic.id} id={topic.id} compact />
-          </section>
+          {!parallelTopicIds.includes(topic.id) &&
+            !collectiveTopicIds.includes(topic.id) && (
+              <section className="topic-mechanism">
+                <h2>把这个原理展开来看</h2>
+                <MechanismPlayer key={topic.id} id={topic.id} compact />
+              </section>
+            )}
           <h2>连接关键细节</h2>
           <ul className="detail-list">
             {content.details.map((detail, i) => (

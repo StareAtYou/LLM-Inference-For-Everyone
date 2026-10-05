@@ -18,6 +18,10 @@ import {
   type MechanismPanel,
 } from "./catalog";
 import "./mechanisms.css";
+import ShapeTeachingPanel, {
+  MechanismModelComparison,
+} from "../education/ShapeTeachingPanel";
+import { deriveMechanismShapes } from "../education/shapeDerivations";
 
 const format = (value: number) => {
   if (!Number.isFinite(value)) return "—";
@@ -353,6 +357,10 @@ function LocalPlayer({
   });
   const { index, position, playing, mode, speed } = timeline;
   const current = frames[index];
+  const shapeLesson = useMemo(
+    () => deriveMechanismShapes(definition.id, index, params),
+    [definition.id, index, params],
+  );
   const changeParam = (key: string, value: number) => {
     timeline.reset();
     setParams((previous) => ({ ...previous, [key]: value }));
@@ -603,6 +611,8 @@ function LocalPlayer({
           exactSnapshot
         )}
       </div>
+      <ShapeTeachingPanel lesson={shapeLesson} />
+      <MechanismModelComparison id={definition.id} params={params} />
       {mode === "staged" && controls}
       {definition.source && (
         <p className="mp-source">

@@ -23,6 +23,7 @@ export function BrandMark() {
 const navigation = [
   ["学习地图", "/learn"],
   ["推理流程", "/pipeline"],
+  ["多 GPU 与通信", "/distributed"],
   ["模型结构", "/models"],
   ["优化实验室", "/lab/kv-cache"],
   ["框架源码", "/frameworks/vllm"],
