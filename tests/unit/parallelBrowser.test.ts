@@ -1,10 +1,15 @@
-import { afterAll, beforeAll, expect, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, expect, it } from "vitest";
 import { chromium, type Browser, type Page } from "@playwright/test";
 import { createServer, type ViteDevServer } from "vite";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 let server: ViteDevServer;
 let browser: Browser;
 let page: Page;
+let cacheDirectory: string;
+let browserErrors: string[] = [];
 const harness = `
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -20,8 +25,18 @@ createRoot(document.getElementById('root')).render(
 `;
 
 beforeAll(async () => {
+  cacheDirectory = await mkdtemp(join(tmpdir(), "parallel-browser-cache-"));
   server = await createServer({
     configFile: false,
+    cacheDir: cacheDirectory,
+    optimizeDeps: {
+      include: [
+        "react",
+        "react-dom/client",
+        "react-router",
+        "react/jsx-runtime",
+      ],
+    },
     server: { host: "127.0.0.1", port: 0 },
     plugins: [
       {
@@ -49,18 +64,40 @@ beforeAll(async () => {
     channel: process.platform === "darwin" ? "chrome" : "chromium",
   });
   page = await browser.newPage({ viewport: { width: 1200, height: 1100 } });
+  page.setDefaultTimeout(8_000);
+  page.on("pageerror", (error) => browserErrors.push(error.message));
+  page.on("requestfailed", (request) =>
+    browserErrors.push(
+      `${request.method()} ${request.url()}: ${request.failure()?.errorText}`,
+    ),
+  );
 }, 20_000);
 
 afterAll(async () => {
   await browser?.close();
   await server?.close();
+  if (cacheDirectory)
+    await rm(cacheDirectory, { recursive: true, force: true });
 });
 
-it("all six strategies continuously interpolate persistent objects and freeze when paused", async () => {
+beforeEach(async () => {
+  browserErrors = [];
+  await page.setViewportSize({ width: 1200, height: 1100 });
   const address = server.httpServer!.address() as { port: number };
   await page.goto(
     `http://127.0.0.1:${address.port}/__parallel.html#/distributed?depth=advanced`,
   );
+  try {
+    await page.getByTestId("parallel-explorer").waitFor({ state: "visible" });
+  } catch (error) {
+    throw new Error(
+      `Parallel fixture did not render: ${browserErrors.join("; ")}\n${String(error)}`,
+    );
+  }
+  expect(browserErrors).toEqual([]);
+}, 20_000);
+
+it("all six strategies continuously interpolate persistent objects and freeze when paused", async () => {
   for (const id of ["tp", "dp", "ep", "pp", "cp", "sp"]) {
     await page
       .getByRole("button", {
@@ -136,7 +173,8 @@ it("all six strategies continuously interpolate persistent objects and freeze wh
       .click();
     expect(await surface.getAttribute("data-position")).toBe("0.0000");
   }
-}, 20_000);
+  expect(browserErrors).toEqual([]);
+}, 30_000);
 
 it("preserves per-strategy parameters and keeps detailed matrices in local scroll areas on mobile", async () => {
   const surface = page.getByTestId("parallel-explorer");
@@ -193,4 +231,5 @@ it("preserves per-strategy parameters and keeps detailed matrices in local scrol
     path: "/tmp/parallel-mobile-ep.png",
     fullPage: true,
   });
-});
+  expect(browserErrors).toEqual([]);
+}, 15_000);
