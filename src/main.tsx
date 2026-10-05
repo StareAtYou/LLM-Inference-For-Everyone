@@ -1,16 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router";
+import { BrowserRouter, HashRouter } from "react-router";
 import "./styles/fonts.css";
 import "./styles/tokens.css";
 import "./styles/global.css";
 import "./styles/pages.css";
 import "./styles/visualizations.css";
 import App from "./App";
+const Router = import.meta.env.MODE === "pages" ? HashRouter : BrowserRouter;
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router>
       <App />
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
 );

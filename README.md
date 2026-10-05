@@ -18,7 +18,21 @@ npm run build
 npm run preview -- --port 4173
 ```
 
-生产预览 http://127.0.0.1:4173。静态托管发布 `dist/`，需要将未知路由回退到 `index.html`，才能直接访问 `/learn/kv-cache` 等深链。当前未执行公开部署。
+生产预览 http://127.0.0.1:4173。静态托管发布 `dist/`，需要将未知路由回退到 `index.html`，才能直接访问 `/learn/kv-cache` 等深链。GitHub Pages 构建使用 Hash 路由，不需要服务器配置回退。
+
+## GitHub Pages 部署
+
+仓库 Settings → Pages → Source 选择 **GitHub Actions**。公开仓库可使用免费 Pages；私有仓库需要支持 Pages 的套餐。推送到 `main` 或手动运行 `Deploy website to GitHub Pages` 工作流，会先检查脱敏、格式、单元测试与 Pages 路由，再发布 `dist/`。
+
+部署后的项目地址为 https://stareatyou.github.io/LLM-Inference-For-Everyone/ ，具体页面使用 `#/pipeline?depth=beginner` 等路径，分享链接与刷新均可直接访问。是否已上线以 Actions 部署结果为准。
+
+```bash
+npm run test:pages
+npm run build:pages
+npm run preview -- --port 4173
+```
+
+Pages 构建的默认子路径为 `/LLM-Inference-For-Everyone/`，可通过 `PAGES_BASE_PATH` 覆盖；工作流使用当前项目子路径；仓库改名或使用自定义域名时，需要同步修改构建路径和 Pages 验证配置。本地默认开发仍使用常规路径。当前网站所有教学动画在浏览器运行；GitHub Pages 不运行 GPU 推理后端。
 
 ## 第一版范围
 
